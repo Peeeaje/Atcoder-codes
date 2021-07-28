@@ -10,6 +10,7 @@ for i in range(Q):
     L, R, V = map(int, input().split())
 
     diff_abs = 0
+    
     if L-2 != -1:
         diff_abs += abs(diff[L-2] + V) - abs(diff[L-2])
         diff[L-2] = diff[L-2] + V
