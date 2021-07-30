@@ -31,4 +31,5 @@ continuous_combi = 0
 
 for _, i in runLengthEncode(S):
     continuous_combi += i * (i - 1) // 2
+    
 print(pos_combi - continuous_combi)
