@@ -14,9 +14,11 @@ def from_readline(dtype=np.int64):
     return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
 
 
-N = from_readline()[0]
-A = np.sort(from_readline())
-B = np.sort(from_readline())
+A, B = from_read()
 
-print(np.sum(np.abs(A-B)))
-
+if 0 < A and B == 0:
+    print("Gold")
+elif A == 0 and B > 0:
+    print("Silver")
+else:
+    print("Alloy")

@@ -1,5 +1,4 @@
 import sys
-import math
 import numpy as np
 
 read = sys.stdin.buffer.read
@@ -15,17 +14,37 @@ def from_readline(dtype=np.int64):
     return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
 
 
-T = from_readline()[0]
+t = from_readline()[0]
 L, X, Y = from_readline()
 Q = from_readline()[0]
-E = from_read()
 
-# y ** 2 + (z - L//2) ** 2 == (L // 2) ** 2
+
+def pos_kanransha(E):
+    theta = E * 2 * np.pi / t
+    x = 0
+    y = -np.sin(theta) * L / 2
+    z = (-np.cos(theta) + 1) * L / 2
+    return x,y,z
+
 for i in range(Q):
-    thi = 2 * math.pi * E[i] / T  # thiはradian
-    y = -1 * math.sin(thi) * (L / 2)
-    z = L / 2 - (math.cos(thi) * (L / 2))
+    E = int(input())
+    x_k, y_k, z_k = pos_kanransha(E)
+    T = [x_k, y_k, z_k]
+    B = [x_k, y_k, 0]
+    C = [X, Y, 0]
 
-    leng = math.sqrt(X ** 2 + (y - Y) ** 2 + z ** 2)
-    sin_ans = z / leng
-    print(math.degrees(math.asin(sin_ans)))
+    print(T, B, C)
+
+    TB = z_k
+    BC = np.sqrt((x_k)**2 + (Y-y_k)**2 + (z_k)**2)
+    
+    if E == 0:
+        ans = 0
+    else:
+        # costheta = (TB**2 + TC**2 - BC**2)/(2*TB*TC)
+        # print(costheta)
+        # theta = np.arccos(costheta)
+        tantheta = BC/TB
+        theta = np.arctan(tantheta)
+        ans = theta/np.pi * 180
+    print(ans)
