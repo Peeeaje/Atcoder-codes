@@ -18,5 +18,7 @@ N, K = from_readline()
 A = from_readline()
 B = from_readline()
 
-temp = sum([abs(a - b) for a, b in zip(A, B)])
-print("Yes" if temp <= K and (temp - K) % 2 == 0 else "No")
+if np.sum(np.abs(A-B)) - K <= 0 and (np.sum(np.abs(A-B)) - K) % 2 == 0:
+    print("Yes")
+else:
+    print("No")

@@ -13,7 +13,6 @@ def from_read(dtype=np.int64):
 def from_readline(dtype=np.int64):
     return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
 
-
 a, b, c = from_read()
 
 print("Yes" if a < c ** b else "No")

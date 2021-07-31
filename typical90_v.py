@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-import math
 
 read = sys.stdin.buffer.read
 readline = sys.stdin.buffer.readline
@@ -16,5 +15,5 @@ def from_readline(dtype=np.int64):
 
 
 A, B, C = from_read()
-gcd_ABC = math.gcd(math.gcd(A, B), math.gcd(B, C))
-print(A // gcd_ABC + B // gcd_ABC + C // gcd_ABC - 3)
+n = np.gcd(np.gcd(A,B), C)
+print((A+B+C)//n - 3)
