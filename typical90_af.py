@@ -2,29 +2,36 @@ import itertools
 
 N = int(input())
 A = list()
+
 for i in range(N):
     A.append(list(map(int, input().split())))
 
 M = int(input())
-XY = list()
+X = set()
+
 for i in range(M):
-    XY.append(tuple(map(int, input().split())))
-XY = set(XY)
+    X.add(tuple(map(int, input().split())))
+
+temp = [i+1 for i in range(N)]
 
 ans = 10 ** 9
-for i in itertools.permutations(range(N)):
-    temp = 0
-    for j in range(N - 1):
-        if (
-            tuple([i[j] + 1, i[j + 1] + 1]) in XY
-            or tuple([i[j + 1] + 1, i[j] + 1]) in XY
-        ):
-            temp = 1
 
-    if temp == 0:
-        temp_ans = 0
-        for k in range(N):
-            temp_ans += A[i[k]][k]
-        ans = min(ans, temp_ans)
+for i in itertools.permutations(temp):
+    ans_temp = 0
+    f = 0
+    run_list = i
 
-print(-1 if ans == 10 ** 9 else ans)
+    for j in range(N-1):
+        if (run_list[j], run_list[j+1]) in X or (run_list[j+1], run_list[j]) in X:
+            f = 1
+            break
+    
+    if f == 0:
+        for dis in range(N):
+            per = run_list[dis] - 1
+            ans_temp += A[per][dis]
+    
+        ans = min(ans, ans_temp)
+
+print(ans if ans != 10 ** 9 else -1)
+
