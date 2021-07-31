@@ -15,5 +15,7 @@ def from_readline(dtype=np.int64):
 
 
 H, W = from_read()
-
-print(H * W if H == 1 or W == 1 else ((H + 1) // 2) * ((W + 1) // 2))
+if H == 1 or W == 1:
+    print(H*W)
+else:
+    print(((W + 1) // 2) * ((H + 1) // 2))
