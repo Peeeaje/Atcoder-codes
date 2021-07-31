@@ -1,39 +1,39 @@
-import sys
-import numpy as np
+N = int(input())
+A = list(map(int, input().split()))
+A.sort()
+Q = int(input())
 
-read = sys.stdin.buffer.read
-readline = sys.stdin.buffer.readline
-readlines = sys.stdin.buffer.readlines
-
-
-def from_read(dtype=np.int64):
-    return np.fromstring(read().decode(), dtype=dtype, sep=" ")
-
-
-def from_readline(dtype=np.int64):
-    return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
-
-
-N = from_readline()[0]
-A = np.sort(from_readline())
-Q = from_readline()[0]
-B = from_read()
-
-ans = []
-
-
-i = B[0]
-
-from bisect import bisect_left
-
-for i in B:
-    arr = A
-    left = bisect_left(arr, i)
-
-    if left == 0:
-        print(abs(A[0] - i))
-    elif left == N:
-        print(abs(A[N - 1] - i))
-
+def is_ok(mid):
+    if A[mid] > B:
+        return True
     else:
-        print(min(abs(A[left] - i), abs(A[left - 1] - i)))
+        return False
+    pass
+
+
+def meguru_bisect(ng, ok):
+    '''
+    初期値のng,okを受け取り,is_okを満たす最小(最大)のokを返す
+    まずis_okを定義すべし
+    ng ok は  とり得る最小の値-1 とり得る最大の値+1
+    最大最小が逆の場合はよしなにひっくり返す
+    '''
+    while (abs(ok - ng) > 1):
+        mid = (ok + ng) // 2
+        if is_ok(mid):
+            ok = mid
+        else:
+            ng = mid
+    return ok
+
+for i in range(Q):
+    B = int(input())
+    ind = meguru_bisect(-1, N)
+    if ind == 0:
+        ans = abs(B-A[ind])
+    elif ind == N:
+        ans = abs(B-A[ind-1])
+    else:
+        ans = min(abs(B - A[ind-1]), abs(B - A[ind]))
+    print(ans)
+    
