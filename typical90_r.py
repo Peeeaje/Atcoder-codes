@@ -28,23 +28,16 @@ def pos_kanransha(E):
 
 for i in range(Q):
     E = int(input())
-    x_k, y_k, z_k = pos_kanransha(E)
-    T = [x_k, y_k, z_k]
-    B = [x_k, y_k, 0]
+    x, y, z = pos_kanransha(E)
+    T = [x, y, z]
+    B = [x, y, 0]
     C = [X, Y, 0]
 
-    print(T, B, C)
 
-    TB = z_k
-    BC = np.sqrt((x_k)**2 + (Y-y_k)**2 + (z_k)**2)
+    TB = z
+    TC = np.sqrt(X**2 + (Y-y)**2 + z**2)
     
-    if E == 0:
-        ans = 0
-    else:
-        # costheta = (TB**2 + TC**2 - BC**2)/(2*TB*TC)
-        # print(costheta)
-        # theta = np.arccos(costheta)
-        tantheta = BC/TB
-        theta = np.arctan(tantheta)
-        ans = theta/np.pi * 180
+    sintheta = TB/TC
+    theta = np.arcsin(sintheta)
+    ans = theta/np.pi * 180
     print(ans)
