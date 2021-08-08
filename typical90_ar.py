@@ -22,8 +22,11 @@ shift = 0
 for i in range(Q):
     T, x, y = from_readline()
     if T == 1:
-        A[x-1], A[y-1] = A[y-1], A[x-1]
-    if T == 2:
+        x = (x - shift - 1) % N
+        y = (y - shift - 1) % N
+        A[x], A[y] = A[y], A[x]
+    elif T == 2:
         shift += 1
     else:
-        print(A[x - shift])
+        x = (x - shift - 1) % N
+        print(A[x])
