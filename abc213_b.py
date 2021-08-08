@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-from collections import deque
 
 read = sys.stdin.buffer.read
 readline = sys.stdin.buffer.readline
@@ -15,12 +14,8 @@ def from_readline(dtype=np.int64):
     return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
 
 
-N, K = from_readline()
+N = from_readline()[0]
+A = from_read()
+A_ = np.sort(A)
 
-
-AB = from_read().reshape(N, 2)
-A = AB[:, 0] - AB[:, 1]
-B = AB[:, 1]
-AB = np.sort(np.hstack([A, B]))
-
-print(np.sum(AB[-K:]))
+print(np.where(A == A_[-2])[0][0]+1)
