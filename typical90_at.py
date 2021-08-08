@@ -1,27 +1,32 @@
 import sys
 import numpy as np
-import collections
+from collections import Counter
 
 read = sys.stdin.buffer.read
 readline = sys.stdin.buffer.readline
 readlines = sys.stdin.buffer.readlines
 
 
-N = int(input())
-A = [i % 46 for i in list(map(int, input().split()))]
-B = [i % 46 for i in list(map(int, input().split()))]
-C = [i % 46 for i in list(map(int, input().split()))]
+def from_read(dtype=np.int64):
+    return np.fromstring(read().decode(), dtype=dtype, sep=" ")
 
-C_A = collections.Counter(A)
-C_B = collections.Counter(B)
-C_C = collections.Counter(C)
+
+def from_readline(dtype=np.int64):
+    return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
+
+
+N = from_readline()[0]
+A = Counter(from_readline() % 46)
+B = Counter(from_readline() % 46)
+C = Counter(from_readline() % 46)
 
 ans = 0
 
-for i in range(0, 47):
-    for j in range(0, 47):
-        for k in range(0, 47):
+for i in range(46):
+    for j in range(46):
+        for k in range(46):
+
             if (i + j + k) % 46 == 0:
-                ans += C_A[i] * C_B[j] * C_C[k]
+                ans += A[i] * B[j] * C[k]
 
 print(ans)
