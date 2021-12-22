@@ -1,49 +1,34 @@
-import math
+import sys
+
+sys.setrecursionlimit(300000)
+
+
+def dfs(G, v):
+    for next_v in G[v]:
+        if seen[next_v] != -1:
+            continue
+        else:
+            seen[next_v] = seen[v] + 1
+        dfs(G, next_v)
+
 
 N = int(input())
+
 graph = dict()
+for i in range(N + 1):
+    graph[i] = []
 
 for i in range(N - 1):
-    a, b = map(int, input().split())
-    if a not in graph:
-        graph[a] = [b]
-    else:
-        graph[a].append(b)
+    A, B = map(int, input().split())
+    graph[A].append(B)
+    graph[B].append(A)
 
-    if b not in graph:
-        graph[b] = [a]
-    else:
-        graph[b].append(a)
+seen = [-1] * (N + 1)
+seen[1] = 0
+dfs(graph, 1)
 
-
-def dfs(graph, v, distance, seen):
-    seen[v] = True
-    for next_v in graph[v]:
-        if seen[next_v] == 1:
-            continue
-        distance[next_v] = min(distance[v] + 1, distance[next_v])
-        dfs(graph, next_v, distance, seen)
-
-
-def return_distance(graph, v):
-    seen = [0] * (N + 1)
-    distance = [10000000] * (N + 1)
-    distance[v] = 0
-    dfs(graph, v, distance, seen)
-    return distance
-
-
-distance = return_distance(graph, 1)
-
-temp_v = -1
-temp_k = -1
-for v in distance[1:]:
-    if v > temp_v:
-        temp_v = v
-        temp_k = distance.index(temp_v)
-
-distance = return_distance(graph, temp_k)[1:]
-
-maxi = max(distance)
-
-print(maxi + 1)
+max_node = seen.index(max(seen))
+seen = [-1] * (N + 1)
+seen[max_node] = 0
+dfs(graph, max_node)
+print(max(seen) + 1)

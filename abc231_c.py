@@ -1,14 +1,6 @@
-N = int(input())
-A = list(map(int, input().split()))
-A = sorted(A)
-Q = int(input())
-MIN = min(A)
-MAX = max(A)
-
-
 def is_ok(mid):
     # 条件を満たすかどうか？問題ごとに定義
-    return A[mid] >= B
+    return A[mid] >= x
 
 
 def meguru_bisect(ng, ok):
@@ -27,10 +19,10 @@ def meguru_bisect(ng, ok):
     return ok
 
 
+N, Q = map(int, input().split())
+A = sorted(list(map(int, input().split())))
 for i in range(Q):
-    B = int(input())
-    ind = meguru_bisect(0, N) - 1
-    ans = abs(B - A[ind])
-    if ind != N - 1:
-        ans = min(ans, abs(B - A[ind + 1]))
-    print(ans)
+    x = int(input())
+    ind = meguru_bisect(-1, N)
+    print(N - ind)
+
