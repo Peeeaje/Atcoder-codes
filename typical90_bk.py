@@ -1,17 +1,28 @@
+import collections
+
 H, W = map(int, input().split())
 P = []
 
 for i in range(H):
     P.append(list(map(int, input().split())))
 
+ans = 0
 for i in range(2**H):
-    rows = []
+    selected_rows = []
     for j in range(H):
         if i >> j & 1:
-            rows.append(P[j])
-    same_columns = []
-    rows_T = list(zip(*rows))
+            selected_rows.append(P[j])
 
+    valid_column_headers = []
+    rows_T = list(zip(*selected_rows))
     for value in rows_T:
         if len(set(value)) == 1:
-            same_columns.append(value[0])
+            valid_column_headers.append(value[0])
+
+    temp_ans = 0
+    if len(valid_column_headers) != 0:
+        temp_ans += (
+            collections.Counter(valid_column_headers).most_common()[0][1]
+        ) * len(selected_rows)
+    ans = max(ans, temp_ans)
+print(ans)

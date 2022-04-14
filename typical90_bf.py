@@ -1,31 +1,20 @@
-def sum_int(i: int):
-    i = str(i)
-    temp = 0
-    for j in range(len(i)):
-        temp += int(i[j])
-    return temp
-
+convert_dict = {}
+for i in range(10**5):
+    convert_dict[i] = (sum(map(int, list(str(i)))) + i) % 10**5
 
 N, K = map(int, input().split())
-seen = [-1] * 10 ** 5
-
-dic = {}
-for i in range(10 ** 5):
-    dic[i] = (i + sum_int(i)) % (10 ** 5)
-
-n = N
-loop = 10 ** 19
+initial_N = N
+used_numbers = [0 for _ in range(10**5)]
+loop = 10**20
 
 i = 0
 while i < K:
-    seen[n] = i
-    n = dic[n]
+    N = convert_dict[N]
     i += 1
 
-    if seen[n] != -1:
-        loop = i - seen[n]
-        i += loop * ((K - i) // loop)
-        seen = [-1] * 10 ** 5
+    if loop == 10**20 and used_numbers[N]:
+        loop = i - used_numbers[N]
+        K -= ((K - i) // loop) * loop
+    used_numbers[N] = i
 
-
-print(n)
+print(N)
