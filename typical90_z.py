@@ -1,58 +1,41 @@
 import sys
 
 sys.setrecursionlimit(300000)
-N = int(input())
 
-G = dict()
-for i in range(1, N + 1):
-    G[i] = []
+
+class Graph:
+    def __init__(self, n):
+        self.n = n
+        self.edges = [[] for _ in range(n)]
+
+    def add_edge(self, u, v):
+        self.edges[u].append(v)
+        self.edges[v].append(u)
+
+
+def dfs(G, v, color):
+    colors[v] = color
+    seen[v] = True
+
+    for next_v in G.edges[v]:
+
+        if seen[next_v] == 1:
+            continue
+        dfs(G, next_v, 1 - color)
+
+
+N = int(input())
+G = Graph(N + 1)
+colors = [-1] * (N + 1)
+
 
 for i in range(N - 1):
     A, B = map(int, input().split())
-    G[A].append(B)
-    G[B].append(A)
-
-col = [-1] * (N + 1)
-col[1] = 0
-
-seen = [0] * (N + 1)
-
-
-def dfs(G, v):
-    seen[v] = True
-
-    for next_v in G[v]:
-        if seen[next_v] == 1:
-            continue
-        dfs(G, next_v)
-
-
-def dfs(G, v, cur):
-    seen[v] = True
-
-    for next_v in G[v]:
-        if seen[next_v] == 1:
-            continue
-        col[next_v] = 1 - cur
-        dfs(G, next_v, col[next_v])
-
+    G.add_edge(A, B)
 
 seen = [0] * (N + 1)
 dfs(G, 1, 0)
-col = col[1:]
-
-temp_0 = sum([1 for i in col if i == 0])
-temp_1 = sum([1 for i in col if i == 1])
-
-if temp_0 > temp_1:
-    ans = []
-    for i in range(len(col)):
-        if col[i] == 0:
-            ans.append(str(i + 1))
+if sum([1 for i in colors if i == 0]) > sum([1 for i in colors if i == 1]):
+    print(" ".join([str(i) for i in range(len(colors)) if colors[i] == 0][: N // 2]))
 else:
-    ans = []
-    for i in range(len(col)):
-        if col[i] == 1:
-            ans.append(str(i + 1))
-
-print(" ".join(ans[: N // 2]))
+    print(" ".join([str(i) for i in range(len(colors)) if colors[i] == 1][: N // 2]))

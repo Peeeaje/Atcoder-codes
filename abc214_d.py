@@ -1,8 +1,9 @@
-import sys
-import numpy as np
 import heapq
-from heapq import heappush, heappop
 import math
+import sys
+from heapq import heappop, heappush
+
+import numpy as np
 
 read = sys.stdin.buffer.read
 readline = sys.stdin.buffer.readline
@@ -16,14 +17,15 @@ def from_read(dtype=np.int64):
 def from_readline(dtype=np.int64):
     return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
 
-n = int(input())
-g = [[] for i in range(n+1)]
 
-for i in range(n-1):
+n = int(input())
+g = [[] for i in range(n + 1)]
+
+for i in range(n - 1):
     a, b, c = map(int, input().split())
-    g[a].append([b,c])
-    g[b].append([a,c])
-g = [np.array(i) for i in g] 
+    g[a].append([b, c])
+    g[b].append([a, c])
+g = [np.array(i) for i in g]
 g = np.array(g)
 print(g)
 
@@ -36,13 +38,15 @@ for i in range(len(g)):
         node = i
 
 import sys
+
 sys.setrecursionlimit(300000)
 
-seen = [0] * (n+1)
+seen = [0] * (n + 1)
 v = node
 
 temp = [10**9] * n
 temp[node] = 0
+
 
 def dfs(G, v):
     seen[v] = True
@@ -55,5 +59,6 @@ def dfs(G, v):
         temp[next_v] = temp[v] + G[v][1][G[v][:, 0] == next_v]
         dfs(G, next_v)
 
-dfs(g,node)
+
+dfs(g, node)
 print(temp)

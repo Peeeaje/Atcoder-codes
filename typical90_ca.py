@@ -1,36 +1,28 @@
-import sys
-import numpy as np
-
-read = sys.stdin.buffer.read
-readline = sys.stdin.buffer.readline
-readlines = sys.stdin.buffer.readlines
+def change_square(matrix: list, a: int, b: int, div: int):
+    for x in [0, 1]:
+        for y in [0, 1]:
+            matrix[a + x][b + y] += div
 
 
-def from_read(dtype=np.int64):
-    return np.fromstring(read().decode(), dtype=dtype, sep=" ")
+H, W = map(int, input().split())
+A = []
+for i in range(H):
+    A.append(list(map(int, input().split())))
+B = []
+for i in range(H):
+    B.append(list(map(int, input().split())))
 
-
-def from_readline(dtype=np.int64):
-    return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
-
-H, W = from_readline()
-AB = from_read().reshape(-1, W)
-A = AB[:H, :]
-B = AB[H:, :]
-
-ans = 0
-for y in range(H-1):
-    for x in range(W-1):
-        Axy = A[y,x]
-        Bxy = B[y,x]
-
-        diff = Axy - Bxy
-        ans += abs(diff)
-        A[y:y+2, x:x+2] -= diff
-
-
-if np.array_equal(A, B):
+c = 0
+for a in range(H - 1):
+    for b in range(W - 1):
+        if A[a][b] == B[a][b]:
+            continue
+        else:
+            div = B[a][b] - A[a][b]
+            change_square(A, a, b, div)
+            c += abs(div)
+if A == B:
     print("Yes")
-    print(ans)
+    print(c)
 else:
     print("No")
