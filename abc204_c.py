@@ -1,16 +1,51 @@
+N, M = map(int, input().split())
+
+
+class Graph:
+    def __init__(self, n):
+        """
+        n: 頂点数
+        """
+        self.n = n
+        self.edges = [[] for _ in range(n)]
+
+    def add_edge(self, u, v):
+        """
+        uからvへの辺を追加する
+        """
+        self.edges[u].append(v)
+
+    def get_edges(self, u):
+        """
+        uから出ている辺を返す
+        """
+        return self.edges[u]
+
+
+g = Graph(N)
+for i in range(M):
+    a, b = map(int, input().split())
+    g.add_edge(a - 1, b - 1)
+
 import sys
-import numpy as np
 
-read = sys.stdin.buffer.read
-readline = sys.stdin.buffer.readline
-readlines = sys.stdin.buffer.readlines
+sys.setrecursionlimit(300000)
 
 
-def from_read(dtype=np.int64):
-    return np.fromstring(read().decode(), dtype=dtype, sep=" ")
+def dfs(G, v, seen):
+    seen[v] = True
+
+    for next_v in G.edges[v]:
+        if seen[next_v] == 1:
+            continue
+        dfs(G, next_v, seen)
 
 
-def from_readline(dtype=np.int64):
-    return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
+seen = [0] * (N + 1)
 
+ans = []
+for i in range(N):
+    dfs(g, i, seen)
+    ans.extend(seen)
 
+print(sum(ans))

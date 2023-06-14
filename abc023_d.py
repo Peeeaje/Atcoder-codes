@@ -1,4 +1,5 @@
 import sys
+
 import numpy as np
 
 read = sys.stdin.buffer.read
@@ -16,4 +17,3 @@ def from_readline(dtype=np.int64):
 
 N = int(readline())
 HS = from_read().reshape(N, 2)
-

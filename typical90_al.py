@@ -1,9 +1,10 @@
 import math
+
 A, B = map(int, input().split())
+gcd = math.gcd(A, B)
+ans = A // gcd * B
 
-lcm = A * B // math.gcd(A, B)
-
-if lcm > 10 ** 18:
+if ans > 10**18:
     print("Large")
 else:
-    print(lcm)
+    print(ans)

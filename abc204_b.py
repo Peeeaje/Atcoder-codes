@@ -1,16 +1,8 @@
-import sys
-import numpy as np
+N = int(input())
+A = list(map(int, input().split()))
 
-read = sys.stdin.buffer.read
-readline = sys.stdin.buffer.readline
-readlines = sys.stdin.buffer.readlines
-
-
-def from_read(dtype=np.int64):
-    return np.fromstring(read().decode(), dtype=dtype, sep=" ")
-
-
-def from_readline(dtype=np.int64):
-    return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
-
-
+ans = 0
+for n in A:
+    if n > 10:
+        ans += n - 10
+print(ans)
