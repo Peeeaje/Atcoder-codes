@@ -1,23 +1,10 @@
-import sys
-import numpy as np
+N = int(input())
+S = []
 
-read = sys.stdin.buffer.read
-readline = sys.stdin.buffer.readline
-readlines = sys.stdin.buffer.readlines
-
-
-def from_read(dtype=np.int64):
-    return np.fromstring(read().decode(), dtype=dtype, sep=" ")
-
-
-def from_readline(dtype=np.int64):
-    return np.fromstring(readline().decode(), dtype=dtype, sep=" ")
-
-
-N = from_readline()[0]
-ST = list()
 for i in range(N):
-    ST.append(input().split())
+    s, t = input().split()
+    t = int(t)
+    S.append([s, t])
 
-ST = sorted(ST, reverse=True, key=lambda x: int(x[1]))
-print(ST[1][0])
+S.sort(key=lambda x: x[1], reverse=True)
+print(S[1][0])
